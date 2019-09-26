@@ -19,7 +19,8 @@ class Genero extends REST_Controller
 	{
 		// Obtenemos todos los headers de la solicitud
 		$headers = $this->input->request_headers();
-		$dataValidate = AUTHORIZATION::verify_request($headers);
+		$dataValidate = AUTHORIZATION::verify_request(AUTHORIZATION::validateTimestamp($headers));
+		// var_dump($headers);
 		if ($dataValidate == parent::HTTP_OK) {
 			if (!empty($id)) {
 				$data = $this->db->get_where("genero", ['id_genero' => $id])->row_array();

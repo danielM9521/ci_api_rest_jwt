@@ -32,9 +32,8 @@ class login extends REST_Controller
 
 	public function index_get()
 	{
-		$tokenData = 'Hello World!';
 		// Creación del token de muestra
-		$token = AUTHORIZATION::generateToken($tokenData);
+		$token = AUTHORIZATION::generateToken(['Example' => 'Hello World!']);
 
 		// Seteamos el codigo de estado HTTP 200
 		$status = parent::HTTP_OK;
@@ -57,9 +56,10 @@ class login extends REST_Controller
 			// Creamos un token con los datos del usuario y enviamos la respuesta
 			$token['token'] = AUTHORIZATION::generateToken(['nombre_usuario' => $data['nombre_usuario']]);
 			$token['timestamp'] = date("Y-n-j H:i:s");
+			var_dump($token);
 			// Seteamos el codigo de estado HTTP 200 para confirmar el éxito en la operación
 			$status = parent::HTTP_OK;
-			$response = ['Estado' => $status, 'token' => $token['token'], 'Mensaje' => 'Token generado con éxito'];
+			$response = ['Estado' => $status, 'token' => $token, 'Mensaje' => 'Token generado con éxito'];
 			// Enviamos la respuesta
 			$this->response($response, $status);
 		}

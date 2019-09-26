@@ -24,11 +24,11 @@ class AUTHORIZATION
         return JWT::encode($data, $CI->config->item('jwt_key'));
 	}
 	
-	public static function verify_request($headers)
+	public static function verify_request($token)
 	{
 		// Extraemos el token si está seteado en el header
-		if (isset($headers['Authorization'])) {
-			$token = $headers['Authorization'];
+		if (!empty($token)) {
+			$token = $token;
 		} 
 		// sino devolvemos un codigo de estado 401
 		else {
@@ -41,6 +41,7 @@ class AUTHORIZATION
 			return $data = REST_Controller::HTTP_FORBIDDEN;
 			exit();
 		} 
+		
 		//Si no es así podemos manipular el token
 		else {
 			try {
