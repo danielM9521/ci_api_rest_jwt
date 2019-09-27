@@ -11,9 +11,8 @@ class login extends REST_Controller
 	public function __construct()
 	{
 		parent::__construct();
-
 		// Cargamos el helper para poder crear el token
-		$this->load->helper(['jwt', 'authorization']);
+		$this->load->helper(['jwt', 'authorization', 'date']);
 	}
 
 	public function validate_user($nombre_usuario, $contrasenia)
@@ -33,11 +32,13 @@ class login extends REST_Controller
 	public function index_get()
 	{
 		// Creación del token de muestra
-		$token = AUTHORIZATION::generateToken(['Example' => 'Hello World!']);
-
+		$token['data'] = ['Ejemplo' => 'Hola mundo'];
+		$token['timestamp'] = now();
+		$tokenGenerated = AUTHORIZATION::generateToken($token);
 		// Seteamos el codigo de estado HTTP 200
 		$status = parent::HTTP_OK;
-		// Mensaje de respuesta
+		//Validamos el token
+		$token = AUTHORIZATION::validateToken($tokenGenerated);
 		$response = ['Mensaje' => 'Este es un token de muestra', 'status' => $status, 'token' => $token];
 		// REST_Controller provee el siguiente método para enviar las respuestas
 		$this->response($response, $status);
@@ -54,12 +55,12 @@ class login extends REST_Controller
 		// Chequeamos que el usuario sea válido
 		if ($data === true) {
 			// Creamos un token con los datos del usuario y enviamos la respuesta
-			$token['token'] = AUTHORIZATION::generateToken(['nombre_usuario' => $data['nombre_usuario']]);
-			$token['timestamp'] = date("Y-n-j H:i:s");
-			var_dump($token);
+			$token['data'] = ['nombre_usuario' => $username];
+			$token['timestamp'] = now();
+			$tokenGenerated = AUTHORIZATION::generateToken($token);
 			// Seteamos el codigo de estado HTTP 200 para confirmar el éxito en la operación
 			$status = parent::HTTP_OK;
-			$response = ['Estado' => $status, 'token' => $token, 'Mensaje' => 'Token generado con éxito'];
+			$response = ['Estado' => $status, 'token' => $tokenGenerated, 'Mensaje' => 'Token generado con éxito'];
 			// Enviamos la respuesta
 			$this->response($response, $status);
 		}
@@ -67,5 +68,7 @@ class login extends REST_Controller
 		else if ($data === false) {
 			$this->response(['Mensaje' => 'Usuario y/o contraseña inválidos'], parent::HTTP_NOT_FOUND);
 		}
+		
 	}
+
 }

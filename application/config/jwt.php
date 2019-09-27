@@ -1,6 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-// Store your secret key here
-// Make sure you use better, long, more random key than this
+// Llave secreta para encriptar el token
 $config['jwt_key'] = '123';
-$config['token_timeout'] = 1;
+// El tiempo d evida del token
+$config['token_timeout'] = 0.3;

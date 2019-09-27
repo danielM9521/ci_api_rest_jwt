@@ -74,11 +74,11 @@ $active_group = 'default';
 $query_builder = TRUE;
 
 $db['default'] = array(
-	'dsn'	=> 'mysql:host=localhost; dbname=tareas; charset=utf8;',
+	'dsn'	=> 'mysql:host=localhost; dbname=libros_db_jwt; charset=utf8;',
 	'hostname' => 'localhost',
 	'username' => 'root',
 	'password' => '',
-	'database' => 'libro_jwt',
+	'database' => 'libros_db_jwt',
 	'dbdriver' => 'pdo',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
