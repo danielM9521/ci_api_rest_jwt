@@ -6,6 +6,7 @@ header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method, Authorization');
 header('Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE');
 header('Allow: GET, POST, OPTIONS, PUT, DELETE');
+//Autor: Daniel Alberto Murillo Aguilar
 class login extends REST_Controller
 {
 	public function __construct()
@@ -68,7 +69,7 @@ class login extends REST_Controller
 		else if ($data === false) {
 			$this->response(['Mensaje' => 'Usuario y/o contraseña inválidos'], parent::HTTP_NOT_FOUND);
 		}
-		
+
 	}
 
 }
